@@ -1,0 +1,114 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <title>IFisica | Feedback</title>
+  <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+    <a href="/"><img src="{% static 'img/favicon.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" style="margin-right: 8px;"></a>
+    <a class="navbar-brand" href="/">IFisica</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="/">Home</a>
+          </li>
+        <div class = "dropdown">
+        <button class = "nav-link text-dark dropbtn">Áreas<i class = "arrow down"></i></button>
+        <div class = "dropdown-content">
+          <a href = "/areas">Áreas</a>
+          <a href = "/subareas">Subáreas</a>
+          <a href = "/topicos">Tópicos</a>
+        </div>
+        </div>
+        <div class = "dropdown">
+        <button class = "nav-link text-dark dropbtn">Invenções<i class = "arrow down"></i></button>
+        <div class = "dropdown-content">
+          <a href = "/invencoes">Invenções</a>
+          <a href = "/fisicos">Físicos</a>
+        </div>
+        </div>
+        <div class = "dropdown">
+        <button class = "nav-link text-dark dropbtn">Questionários<i class = "arrow down"></i></button>
+        <div class = "dropdown-content">
+          <a href="/questionarios">Questionários</a>
+          <a href="/envios">Envios</a>
+        </div>
+        </div>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="/pessoas">Integrantes</a>
+        </li>
+        <li id = "adm" class="nav-item">
+          <a class="nav-link text-dark" href="/admin/">Administração</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <style>
+    
+    .correta{
+        background-color: lightgreen;
+    }
+    .errada{
+        background-color: lightcoral;
+    }
+    .spoiler{
+        background-color: gray;
+        color: transparent;
+        user-select: none;
+    }
+    .spoiler:hover{
+        background-color: inherit;
+        color: inherit;
+    }
+    .centralizar{
+      text-align: center;
+    }
+    
+  </style>
+  
+  <div class="container mt-5">
+    <h2 style = "text-align: center;" class="mb-4">Feedback</h2>
+    <p style = "text-align: center;" class="mb-4">Para visualizar os gabaritos ocultos das linhas vermelhas, basta passar o ponteiro no <span class="spoiler">X</span>.</p>
+    <table class="table">
+        <thead>
+            <tr>
+              <th scope="col" class="centralizar">Questão</th>
+              <th scope="col" class="centralizar">Resposta</th>
+              <th scope="col" class="centralizar">Gabarito</th>
+            </tr>
+        </thead>
+        {% for numero, resposta, resposta_correta in lista_respostas %}
+        <tbody>
+            {% if resposta == resposta_correta %}
+                <td class="correta centralizar">{{ forloop.counter }}</td>
+                <td class="correta centralizar">{{ resposta }}</td>
+                <td class="correta centralizar">{{ resposta_correta }}</td>
+            {% else %}
+                <td class="errada centralizar">{{ forloop.counter }}</td>
+                <td class="errada centralizar">{{ resposta }}</td>
+                <td class="errada centralizar"><span class="spoiler">{{ resposta_correta }}</span></td>
+            {% endif %}
+        </tbody>
+        {% endfor %}
+    </table>
+  </div>
+
+  <div style="margin-bottom: 60px;"></div>
+
+  <!-- Incluindo jQuery e Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

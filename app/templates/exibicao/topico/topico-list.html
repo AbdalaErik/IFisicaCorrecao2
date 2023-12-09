@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <title>IFisica | Tópicos</title>
+  <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+    <a href="/"><img src="{% static 'img/favicon.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" style="margin-right: 8px;"></a>
+    <a class="navbar-brand" href="/">IFisica</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="/">Home</a>
+          </li>
+        <div class = "dropdown">
+        <button class = "nav-link text-dark dropbtn">Áreas<i class = "arrow down"></i></button>
+        <div class = "dropdown-content">
+          <a href = "/areas">Áreas</a>
+          <a href = "/subareas">Subáreas</a>
+          <a href = "/topicos">Tópicos</a>
+        </div>
+        </div>
+        <div class = "dropdown">
+        <button class = "nav-link text-dark dropbtn">Invenções<i class = "arrow down"></i></button>
+        <div class = "dropdown-content">
+          <a href = "/invencoes">Invenções</a>
+          <a href = "/fisicos">Físicos</a>
+        </div>
+        </div>
+        <div class = "dropdown">
+        <button class = "nav-link text-dark dropbtn">Questionários<i class = "arrow down"></i></button>
+        <div class = "dropdown-content">
+          <a href="/questionarios">Questionários</a>
+          <a href="/envios">Envios</a>
+        </div>
+        </div>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="/pessoas">Integrantes</a>
+        </li>
+        <li id = "adm" class="nav-item">
+          <a class="nav-link text-dark" href="/admin/">Administração</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <h2 style = "text-align: center;" class="mb-4">Tópicos</h2>
+    {% for Area in areas %}
+    <button class="collapsible quebra">{{ Area.nome }}</button>
+    <div class="content">
+      {% for Subarea in Area.subarea_set.all %}
+      <button class="collapsible level-2 quebra">{{ Subarea.nome }}</button>
+      <div class="content" style = "margin-left: 50px;">
+        {% for Topico in Subarea.topico_set.all %}
+        <a href = "{% url 'topicoDetail' Topico.pk %}"><p class="quebra">{{ Topico.nome }}</p></a>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <div style="margin-bottom: 60px;"></div>
+
+  <!-- Script para fazer o collapsible funcionar -->
+  <script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+  </script>
+
+  <!-- Incluindo jQuery e Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
